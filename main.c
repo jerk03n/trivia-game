@@ -1,9 +1,66 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <conio.h>
+
+void clearScreen();
+void adminMenu();
+void mainMenu();
 
 void clearScreen(){
     system("cls");
+}
+
+void adminMenu()
+{
+    int choice = 0;
+
+    while (1)
+    {
+        clearScreen();
+        printf("====ADMIN MENU====\n");
+        printf("[1] Add Question\n");
+        printf("[2] Edit Question\n");
+        printf("[3] Delete Question\n");
+        printf("[4] Import Question\n");
+        printf("[5] Export Question\n");
+        printf("[6] Return to Main Menu\n");
+        printf("Type the number corresponding to your choice.\n");
+        printf("Choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            printf("Add Question");
+            Sleep(1000);
+            break;
+        case 2:
+            printf("Edit Question");
+            Sleep(1000);
+            break;
+        case 3:
+            printf("Delete Question");
+            Sleep(1000);
+            return;
+        case 4:
+            printf("Import Question");
+            Sleep(1000);
+            break;
+        case 5:
+            printf("Export Question");
+            Sleep(1000);
+            break;
+        case 6:
+            printf("Return to Main Menu");
+            Sleep(1000);
+            mainMenu();
+            break;
+        default:
+            printf("Invalid input");
+            Sleep(1000);
+        }
+    }
 }
 
 void mainMenu(){
@@ -23,6 +80,7 @@ void mainMenu(){
             case 1:
                 printf("Manage Data");
                 Sleep(1000);
+                adminMenu();
                 break;
             case 2: 
                 printf("Play");
