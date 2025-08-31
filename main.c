@@ -4,6 +4,9 @@
 #include <conio.h>
 
 void clearScreen();
+int checkPassword();
+int askIfRetry();
+
 void adminMenu();
 void mainMenu();
 
@@ -21,10 +24,11 @@ int checkPassword(){
 
     printf("Enter password: ");
     while((ch = getch()) != 13 && i < sizeof(inputPwd) - 1){
-        if (ch == 8){
+    // stops if 'enter' is pressed or array limit is reached
+        if (ch == 8){ // if backspace is pressed, delete last inputted char
             if(i > 0){
                 i--;
-                printf("\b \b");
+                printf("\b \b"); 
             }
         }else{
             inputPwd[i++] = ch;
@@ -34,13 +38,34 @@ int checkPassword(){
 
     inputPwd[i] = '\0';
     if(strcmp(password, inputPwd) == 0){
-        return 0; 
+        return 0; // passwords match
     }
+}
+
+int askIfRetry(){
+    int isMatchingPwd = 1; // default to not matching
+    int flag = 0;
+    char ch;
+    
+    while(flag != 1){
+        isMatchingPwd = checkPassword();
+        if(isMatchingPwd == 0){
+            flag = 1; // user inputted correct password
+        }else{
+            printf("\nIncorrect password, would you like to retry? (y/n): ");
+            scanf(" %c", &ch);
+            if(ch != 'y'){ // no error handling if 'n' or 'y' is not pressed
+                flag = 1; // user doesn't want to retry 
+            }
+        }
+    }
+
+    return isMatchingPwd;
 }
 
 void adminMenu(){
     int choice = 0;
-    int canView = checkPassword();
+    int canView = askIfRetry();
 
     if(canView == 0){
         while (1){
