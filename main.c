@@ -13,7 +13,7 @@ void clearScreen(){
 
 int checkPassword(){
     clearScreen();
-    
+
     char password[] = "12345678";
     char inputPwd[21];
     char ch;
@@ -21,8 +21,15 @@ int checkPassword(){
 
     printf("Enter password: ");
     while((ch = getch()) != 13 && i < sizeof(inputPwd) - 1){
-        inputPwd[i++] = ch;
-        printf("*");
+        if (ch == 8){
+            if(i > 0){
+                i--;
+                printf("\b \b");
+            }
+        }else{
+            inputPwd[i++] = ch;
+            printf("*");
+        }
     }
 
     inputPwd[i] = '\0';
