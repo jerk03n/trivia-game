@@ -12,13 +12,15 @@ void clearScreen(){
 }
 
 int checkPassword(){
+    clearScreen();
+    
     char password[] = "12345678";
     char inputPwd[21];
     char ch;
     int i = 0;
 
     printf("Enter password: ");
-    while((ch = getch()) != '13' && i < sizeof(inputPwd) - 1){
+    while((ch = getch()) != 13 && i < sizeof(inputPwd) - 1){
         inputPwd[i++] = ch;
         printf("*");
     }
@@ -29,14 +31,12 @@ int checkPassword(){
     }
 }
 
-void adminMenu()
-{
+void adminMenu(){
     int choice = 0;
     int canView = checkPassword();
 
     if(canView == 0){
-        while (1)
-        {
+        while (1){
             clearScreen();
             printf("====ADMIN MENU====\n");
             printf("[1] Add Question\n");
@@ -49,35 +49,35 @@ void adminMenu()
             printf("Choice: ");
             scanf("%d", &choice);
 
-        switch (choice)
-        {
-        case 1:
-            printf("Add Question");
-            Sleep(1000);
-            break;
-        case 2:
-            printf("Edit Question");
-            Sleep(1000);
-            break;
-        case 3:
-            printf("Delete Question");
-            Sleep(1000);
-            return;
-        case 4:
-            printf("Import Question");
-            Sleep(1000);
-            break;
-        case 5:
-            printf("Export Question");
-            Sleep(1000);
-            break;
-        case 6:
-            printf("Return to Main Menu");
-            Sleep(1000);
-            return;
-        default:
-            printf("Invalid input");
-            Sleep(1000);
+            switch (choice){
+            case 1:
+                printf("Add Question");
+                Sleep(1000);
+                break;
+            case 2:
+                printf("Edit Question");
+                Sleep(1000);
+                break;
+            case 3:
+                printf("Delete Question");
+                Sleep(1000);
+                return;
+            case 4:
+                printf("Import Question");
+                Sleep(1000);
+                break;
+            case 5:
+                printf("Export Question");
+                Sleep(1000);
+                break;
+            case 6:
+                printf("Return to Main Menu");
+                Sleep(1000);
+                return;
+            default:
+                printf("Invalid input");
+                Sleep(1000);
+            }
         }
     }
 }
