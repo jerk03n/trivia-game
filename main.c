@@ -54,8 +54,7 @@ void adminMenu()
         case 6:
             printf("Return to Main Menu");
             Sleep(1000);
-            mainMenu();
-            break;
+            return;
         default:
             printf("Invalid input");
             Sleep(1000);
