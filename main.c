@@ -11,23 +11,43 @@ void clearScreen(){
     system("cls");
 }
 
+int checkPassword(){
+    char password[] = "12345678";
+    char inputPwd[21];
+    char ch;
+    int i = 0;
+
+    printf("Enter password: ");
+    while((ch = getch()) != '13' && i < sizeof(inputPwd) - 1){
+        inputPwd[i++] = ch;
+        printf("*");
+    }
+
+    inputPwd[i] = '\0';
+    if(strcmp(password, inputPwd) == 0){
+        return 0; 
+    }
+}
+
 void adminMenu()
 {
     int choice = 0;
+    int canView = checkPassword();
 
-    while (1)
-    {
-        clearScreen();
-        printf("====ADMIN MENU====\n");
-        printf("[1] Add Question\n");
-        printf("[2] Edit Question\n");
-        printf("[3] Delete Question\n");
-        printf("[4] Import Question\n");
-        printf("[5] Export Question\n");
-        printf("[6] Return to Main Menu\n");
-        printf("Type the number corresponding to your choice.\n");
-        printf("Choice: ");
-        scanf("%d", &choice);
+    if(canView == 0){
+        while (1)
+        {
+            clearScreen();
+            printf("====ADMIN MENU====\n");
+            printf("[1] Add Question\n");
+            printf("[2] Edit Question\n");
+            printf("[3] Delete Question\n");
+            printf("[4] Import Question\n");
+            printf("[5] Export Question\n");
+            printf("[6] Return to Main Menu\n");
+            printf("Type the number corresponding to your choice.\n");
+            printf("Choice: ");
+            scanf("%d", &choice);
 
         switch (choice)
         {
