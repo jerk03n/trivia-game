@@ -3,15 +3,43 @@
 #include <windows.h>
 #include <conio.h>
 
+struct questionData{
+    char topic[20];
+    int questionNum;
+    char question[150];
+    char choice1[30];
+    char choice2[30];
+    char choice3[30];
+    char answer[30];
+};
+
+struct questionData records[100];
+int recordCount = 0;
+
 void clearScreen();
+void clearInpBuffer();
+void removeNewline(char *str);
 int checkPassword();
 int askIfRetry();
 
 void adminMenu();
 void mainMenu();
 
+void addQuestion(struct questionData records[], int *recordCount);
+/*******************************************************************************************************/
 void clearScreen(){
     system("cls");
+}
+
+void clearInpBuffer(){
+    int c;
+    while((c = getchar()) != '\n' && c != EOF){
+
+    }
+}
+
+void removeNewline(char *str){
+    str[strcspn(str, "\n")] = '\0';
 }
 
 int checkPassword(){
@@ -63,6 +91,91 @@ int askIfRetry(){
     return isMatchingPwd;
 }
 
+void addQuestion(struct questionData records[], int *recordCount){
+    char inptQues[150];
+    char inptAns[30]; 
+
+    clearScreen();
+    clearInpBuffer();
+
+    printf("Input new question: ");
+    fgets(inptQues, sizeof(inptQues), stdin);
+    removeNewline(inptQues);
+
+    printf("Input answer to new question: ");
+    fgets(inptAns, sizeof(inptAns), stdin);
+    removeNewline(inptAns);
+
+    for(int i = 0; i < *recordCount; i++){
+        if(strcmp(records[i].question, inptQues) == 0 && 
+           strcmp(records[i].answer, inptAns) == 0){
+
+            printf("This question and answer pair already exists.\n");
+            printf("Question%d: %s\nAnswer: %s\n", records[i].questionNum, 
+                    records[i].question, records[i].answer);
+                    Sleep(1000);
+            return; 
+        }
+    }
+
+    struct questionData newRecord;
+    strcpy(newRecord.question, inptQues);
+    strcpy(newRecord.answer, inptAns);
+
+    printf("Input topic: ");
+    fgets(newRecord.topic, sizeof(newRecord.topic), stdin);
+    removeNewline(newRecord.topic);
+
+    printf("Input first choice: ");
+    fgets(newRecord.choice1, sizeof(newRecord.choice1), stdin);
+    removeNewline(newRecord.choice1);
+
+    printf("Input second choice: ");
+    fgets(newRecord.choice2, sizeof(newRecord.choice2), stdin);
+    removeNewline(newRecord.choice2);
+
+    printf("Input third choice: ");
+    fgets(newRecord.choice3, sizeof(newRecord.choice3), stdin);
+    removeNewline(newRecord.choice3);
+
+    int lastQNum = 0;
+    for(int i = 0; i < *recordCount; i++){
+        if(strcmp(records[i].topic, newRecord.topic) == 0 &&
+           records[i].questionNum > lastQNum){
+
+            lastQNum = records[i].questionNum;
+           }
+    }
+    newRecord.questionNum = lastQNum + 1;
+
+    if(*recordCount < 100){
+        records[*recordCount] = newRecord;
+        (*recordCount)++;
+
+        FILE *fp = fopen("questions.txt", "a");
+        if (fp != NULL)
+        {
+            fprintf(fp, "%s| %d| %s| %s| %s| %s| %s\n",
+                    newRecord.topic,
+                    newRecord.questionNum,
+                    newRecord.question,
+                    newRecord.choice1,
+                    newRecord.choice2,
+                    newRecord.choice3,
+                    newRecord.answer);
+            fclose(fp);
+        }
+        else
+        {
+            printf("Error! Could not open file for saving.\n");
+        }
+        printf("New Question Added Successfully!\n");
+        printf("Returning to Admin Menu...");
+        Sleep(1000);
+        return;
+    }
+}
+
 void adminMenu(){
     int choice = 0;
     int canView = askIfRetry();
@@ -83,8 +196,8 @@ void adminMenu(){
 
             switch (choice){
             case 1:
-                printf("Add Question");
                 Sleep(1000);
+                addQuestion(records, &recordCount);
                 break;
             case 2:
                 printf("Edit Question");
