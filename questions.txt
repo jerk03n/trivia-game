@@ -1,1 +1,5 @@
-Human Anatomy| 1| Which of the following is NOT part of the central nervous system? | Cerebellum| Hippocampus| Sympathetic ganglia| Sympathetic ganglia
+Human Anatomy| 1| Which of the following is NOT part of the central nervous system?| Cerebellum| Hippocampus| Sympathetic ganglia| Sympathetic ganglia
+Human Anatomy| 2| What is the narrowest portion of the stomach called?| Fundus| Pylorus| Duodenum| Pylorus
+Human Anatomy| 3| Which is the largest organ in the human body?| Liver| Large intestine| Skin| Skin
+Human Anatomy| 4| Which of these body parts contains the most bones?| The hand| the feet| The vertebral column| The hand
+Human Anatomy| 5| What is the scientific name for the earwax?| Serumen| Sebum| Vellus| Serumen

@@ -91,6 +91,37 @@ int askIfRetry(){
     return isMatchingPwd;
 }
 
+int loadQuestions(struct questionData records[], int *recordCount){
+    FILE *fp = fopen("questions.txt", "r");
+    
+    if (fp == NULL)
+    {
+        return 0;
+    }
+
+    char line[512];
+    *recordCount = 0;
+    while (fgets(line, sizeof(line), fp) && *recordCount < 100)
+    {
+        struct questionData q;
+        int fields = sscanf(line, "%19[^|]| %d| %149[^|]| %29[^|]| %29[^|]| %29[^|]| %29[^\n]",
+                            q.topic,
+                            &q.questionNum,
+                            q.question,
+                            q.choice1,
+                            q.choice2,
+                            q.choice3,
+                            q.answer);
+        if (fields == 7)
+        {
+            records[*recordCount] = q;
+            (*recordCount)++;
+        }
+    }
+    fclose(fp);
+    return *recordCount;
+}
+
 void addQuestion(struct questionData records[], int *recordCount){
     char inptQues[150];
     char inptAns[30]; 
@@ -113,7 +144,7 @@ void addQuestion(struct questionData records[], int *recordCount){
             printf("This question and answer pair already exists.\n");
             printf("Question%d: %s\nAnswer: %s\n", records[i].questionNum, 
                     records[i].question, records[i].answer);
-                    Sleep(1000);
+                    Sleep(2000);
             return; 
         }
     }
@@ -262,6 +293,7 @@ void mainMenu(){
 }
 
 int main(){
+    loadQuestions(records, &recordCount);
     mainMenu();
     return 0;
 }
